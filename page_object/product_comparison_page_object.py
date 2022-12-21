@@ -1,7 +1,8 @@
-from typing import Tuple
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
-from base_page_object import BasePage
+from selenium.webdriver.support.expected_conditions import visibility_of_element_located
+from selenium.webdriver.support.wait import WebDriverWait
+
+from .base_page_object import BasePage
 
 
 class ComparePage(BasePage):
@@ -13,7 +14,12 @@ class ComparePage(BasePage):
         return name1, name2
 
     def click_remove_button(self) -> None:
-        self.driver.find_element(By.CLASS_NAME, 'btn-danger').click()
+        el = WebDriverWait(self.driver, 10).until(
+            visibility_of_element_located(
+                (By.CLASS_NAME, 'btn-danger')
+            )
+        )
+        el.click()
 
     def get_products_is_absent_text(self) -> str:
         return self.driver.find_element(By.XPATH, '//div[@id ="content"]/p').text
