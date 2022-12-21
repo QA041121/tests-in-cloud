@@ -1,5 +1,5 @@
 import unittest
-from product_page_page_object import ProductPage
+from page_object.product_page_page_object import ProductPage
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -29,7 +29,7 @@ class ProductPageTest(unittest.TestCase):
 
     def test_product_code(self):
         product_code = self.product_page.get_product_code()
-        self.assertEqual('Product Code: Product 15', product_code)
+        self.assertEqual('Product 15', product_code)
 
     def test_product_price(self):
         product_price = self.product_page.get_price()
@@ -38,5 +38,6 @@ class ProductPageTest(unittest.TestCase):
     def test_description(self):
         product_description = self.product_page.get_description()
         self.assertIn(
-            'The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution.', product_description)
-
+            'The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution.',
+            product_description
+        )

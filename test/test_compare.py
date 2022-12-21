@@ -2,8 +2,8 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from product_page_page_object import ProductPage
-from product_comparison_page_object import ComparePage
+from page_object.product_page_page_object import ProductPage
+from page_object.product_comparison_page_object import ComparePage
 
 
 class CompareTest(unittest.TestCase):
@@ -38,6 +38,3 @@ class CompareTest(unittest.TestCase):
         self.compare_page.click_remove_button()
         self.compare_page.click_remove_button()
         self.assertEqual('You have not chosen any products to compare.', self.compare_page.get_products_is_absent_text())
-
-
-

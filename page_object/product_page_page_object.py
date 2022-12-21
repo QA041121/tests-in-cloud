@@ -3,7 +3,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from base_page_object import BasePage
+from .base_page_object import BasePage
 
 
 class ProductPage(BasePage):
@@ -22,7 +22,8 @@ class ProductPage(BasePage):
         return self.driver.find_element(By.XPATH, '(//ul[@class = "list-unstyled"])[8]/li/a').text
 
     def get_product_code(self) -> str:
-        return self.driver.find_element(By.XPATH, '//li[contains(text(),"Product Code:")]').text
+        product_code_line = self.driver.find_element(By.XPATH, '//li[contains(text(),"Product Code:")]').text
+        return product_code_line.split("Product Code: ")[1]
 
     def get_price(self) -> str:
         return self.driver.find_element(By.XPATH, '(//ul[@class = "list-unstyled"])[9]/li/h2').text
@@ -36,19 +37,25 @@ class ProductPage(BasePage):
     def click_continue_button(self) -> None:
         self.driver.find_element(By.ID, 'button-review').click()
 
-    def get_warning_alert(self) -> WebElement:
+    def wait_warning_alert(self) -> WebElement:
         return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'alert-danger')))
 
-    def get_staleness_of_alert(self) -> WebElement:
-        return WebDriverWait(self.driver, 10).until(EC.staleness_of(self.get_warning_alert()))
+    def wait_alert_disappear(self) -> WebElement:
+        return WebDriverWait(self.driver, 10).until(EC.staleness_of(self.wait_warning_alert()))
 
     def get_success_alert(self) -> str:
         return WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'alert-success'))
         ).text
 
-    def click_rating(self) -> None:
-        self.driver.find_element(By.XPATH, '//input[@value = "4"]').click()
+    def set_rating(self, value: int) -> None:
+        self.driver.find_element(By.XPATH, f'//input[@value = "{value}"]').click()
+
+    def clear_name_field(self) -> None:
+        raise NotImplementedError()
+
+    def clear_review_field(self) -> None:
+        raise NotImplementedError()
 
     def fill_name_field(self, name: str) -> None:
         name_field = self.driver.find_element(By.ID, 'input-name')

@@ -1,10 +1,8 @@
-from typing import Tuple
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
-from base_page_object import BasePage
+from .base_page_object import BasePage
 
 
 class CartPage(BasePage):
