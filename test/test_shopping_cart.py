@@ -36,7 +36,8 @@ class ShoppingCartTest(unittest.TestCase):
 
     def test_delete_from_cart(self):
         self.cart_page.open()
-        self.assertEqual(('Samsung SyncMaster 941BW', 'HP LP3065'), self.cart_page.get_product_name())
+        self.assertEqual('Samsung SyncMaster 941BW', self.cart_page.get_product_name()[2])
+        self.assertEqual('HP LP3065', self.cart_page.get_product_name()[3])
         self.cart_page.click_remove_button()
         self.cart_page.click_remove_button()
         self.assertEqual('Your shopping cart is empty!',

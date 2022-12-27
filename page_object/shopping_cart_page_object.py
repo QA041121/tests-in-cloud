@@ -10,11 +10,13 @@ class CartPage(BasePage):
     def get_url(self) -> str:
         return 'http://54.183.112.233/index.php?route=checkout/cart'
 
-    def get_product_name(self) -> tuple[str, str]:
-        elements = self.driver.find_elements(By.XPATH, '//tbody/tr/td[2]/a')
-        text1 = elements[2].text
-        text2 = elements[3].text
-        return text1, text2
+    def get_product_name(self) -> list[str]:
+        elements: list[WebElement] = self.driver.find_elements(By.XPATH, '//tbody/tr/td[2]/a')
+        names: list[str] = []
+        for name in elements:
+            names.append(name.text)
+        return names
+
 
     def get_total_price(self) -> WebElement:
         return self.driver.find_element(By.XPATH, '(//tbody/tr[4]/td[2])[2]')

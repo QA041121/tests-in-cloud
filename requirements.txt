@@ -1,2 +1,2 @@
 selenium
-webdriver_manager
+webdriver-manager

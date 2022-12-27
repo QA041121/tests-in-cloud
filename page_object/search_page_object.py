@@ -6,8 +6,14 @@ from selenium.webdriver.remote.webelement import WebElement
 from .base_page_object import BasePage
 
 
+@dataclass
+class Product:
+    name: str
+    price: str
+
+
 def extract_decimal_price(text: str) -> str:
-    split_by_lines: list[str] = text.split("\n")
+    split_by_lines: List[str] = text.split("\n")
     first_price_lines = split_by_lines[0].split(' ')
     first_price = first_price_lines[0]
     return first_price
@@ -51,16 +57,6 @@ class SearchPage(BasePage):
         checkbox = self.driver.find_element(By.ID, "description")
         checkbox.click()
 
-    def get_name(self) -> str:
-        return self.driver.find_element(By.XPATH, '//h4/a').text
-
-    def get_price(self) -> str:
-        return extract_decimal_price(self.driver.find_element(By.CLASS_NAME, 'price').text)
-
-    # def get_price_sony(self) -> str:
-    #     price = self.driver.find_element(By.CLASS_NAME, 'price').text
-    #     return extract_decimal_price(price)
-
     def get_text_absent_result(self) -> str:
         return self.driver.find_element(By.XPATH, '(//p)[3]').text
 
@@ -76,8 +72,11 @@ class SearchPage(BasePage):
     #     products.append(Product(name, descr, price))
     # return products
 
-    def get_result_hp(self) -> str:
-        return self.driver.find_element(By.XPATH, '(//h4)[1]/a').text
-
-    def get_result_mac(self) -> str:
-        return self.driver.find_element(By.XPATH, '(//h4)[2]/a').text
+    def get_products(self) -> list[Product]:
+        all_product_cards = self.driver.find_elements(By.CLASS_NAME, "product-layout")
+        products: list[Product] = []
+        for product_card in all_product_cards:
+            name = product_card.find_element(By.TAG_NAME, "h4").text
+            price = extract_decimal_price(product_card.find_element(By.CLASS_NAME, 'price').text)
+            products.append(Product(name, price))
+        return products

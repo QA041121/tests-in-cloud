@@ -32,9 +32,11 @@ class CompareTest(unittest.TestCase):
         alert = self.samsung_product_page.get_success_alert()
         self.assertEqual('Success: You have added Samsung SyncMaster 941BW to your product comparison!\n×', alert)
         self.samsung_product_page.click_product_comparison_link()
-        self.assertEqual(('Apple Cinema 30"', 'Samsung SyncMaster 941BW'), self.compare_page.get_product_name())
+        self.assertEqual(['Apple Cinema 30"', 'Samsung SyncMaster 941BW'], self.compare_page.get_product_name())
 
     def test_compare(self):
         self.compare_page.click_remove_button()
         self.compare_page.click_remove_button()
-        self.assertEqual('You have not chosen any products to compare.', self.compare_page.get_products_is_absent_text())
+        self.assertEqual(
+            'You have not chosen any products to compare.', self.compare_page.get_products_is_absent_text()
+        )
