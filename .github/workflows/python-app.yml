@@ -31,7 +31,7 @@ jobs:
       env:
        SELENIUM_DRIVER_KIND: remote
     - name: Upload test reports
-      uses: actions/upload-artifactv@3
+      uses: actions/upload-artifact@v3
       with:
        name: test-reports
        path: test-reports
