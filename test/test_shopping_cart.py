@@ -1,7 +1,7 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_factory import WebDriverFactory
 from page_object.product_page_page_object import ProductPage
 from page_object.shopping_cart_page_object import CartPage
 
@@ -12,7 +12,7 @@ class ShoppingCartTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        cls.driver = WebDriverFactory.get_driver()
         cls.hp_product_page = ProductPage(cls.driver, '47')
         cls.samsung_product_page = ProductPage(cls.driver, '33')
         cls.cart_page = CartPage(cls.driver)

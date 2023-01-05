@@ -4,7 +4,7 @@ from page_object.search_page_object import SearchPage
 from page_object.search_page_object import Product
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_factory import WebDriverFactory
 
 
 class SearchPageTest(unittest.TestCase):
@@ -13,7 +13,7 @@ class SearchPageTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        cls.driver = WebDriverFactory.get_driver()
         cls.search_page = SearchPage(cls.driver)
         cls.search_page.open()
 

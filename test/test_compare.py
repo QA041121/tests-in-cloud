@@ -1,7 +1,7 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_factory import WebDriverFactory
 from page_object.product_page_page_object import ProductPage
 from page_object.product_comparison_page_object import ComparePage
 
@@ -12,7 +12,7 @@ class CompareTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        cls.driver = WebDriverFactory.get_driver()
         cls.apple_product_page = ProductPage(cls.driver, '42')
         cls.samsung_product_page = ProductPage(cls.driver, '33')
         cls.compare_page = ComparePage(cls.driver)
