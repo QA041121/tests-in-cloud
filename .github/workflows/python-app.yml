@@ -32,7 +32,6 @@ jobs:
         pytest -v --junitxml=test-reports/report.xml --html=test-reports/report.html
       env:
         SELENIUM_DRIVER_KIND: remote
-        WINDOW_RESOLUTION: DESKTOP_1024X768
     - name: Upload test reports
       uses: actions/upload-artifact@v3
       if: always()
